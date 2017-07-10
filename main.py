@@ -180,6 +180,7 @@ def get_information_of_images(file_exist, image, idd, date):
 			texty = region[0]['y']
 
 			img = cv2.imread(image)
+			img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 			img = cv2.rectangle(img,(px0,py0),(px1,py1),(0,255,0),3)
 			img = cv2.putText(img,plate,(textx,int(texty*0.95)), font, 1,(0,255,3),2,cv2.LINE_AA)
 			scipy.misc.imsave(name_to_workdir+'/{}/'.format(idd)+'{}_{}.jpg'.format(idd,date),img)
@@ -217,4 +218,3 @@ def runforever():
 
 if __name__ == '__main__':
 	runforever()
-	
