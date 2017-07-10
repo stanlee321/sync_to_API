@@ -102,7 +102,7 @@ def move_files_to_work_dir(files_exist):
 		for folder_ in sorted(folders_found):
 			path = name_to_workdir+'/{}/video/'.format(folder_)
 
-			onlyfiles = [f for f in listdir(path) if isfile(join(path, f))]
+			onlyfiles = [f for f in folders_found(path) if isfile(join(path, f))]
 			if '.mp4' in onlyfiles:
 				print('Already video here')
 
