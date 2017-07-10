@@ -7,6 +7,8 @@
 import cv2
 from utils import check_folder, get_json_from_api, get_plate_region, get_plates, read_data, send
 import os
+from os import listdir
+from os.path import isfile, join
 import scipy.misc
 from pandas.io.json import json_normalize
 #import matplotlib.pyplot as plt
@@ -102,7 +104,7 @@ def move_files_to_work_dir(files_exist):
 		for folder_ in sorted(folders_found):
 			path = name_to_workdir+'/{}/video/'.format(folder_)
 
-			onlyfiles = [f for f in folders_found(path) if isfile(join(path, f))]
+			onlyfiles = [f for f in listdir(path) if isfile(join(path, f))]
 			if '.mp4' in onlyfiles:
 				print('Already video here')
 
