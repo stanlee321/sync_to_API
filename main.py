@@ -5,7 +5,7 @@
 
 # IMPORT some libraries
 import cv2
-from utils import check_folder, get_json_from_api, get_plate_region, get_plates, read_data
+from utils import check_folder, get_json_from_api, get_plate_region, get_plates, read_data, send
 import os
 import scipy.misc
 from pandas.io.json import json_normalize
@@ -211,6 +211,10 @@ def runforever():
 		print('waiting for files in directories...')
 		print('Checkpoint')
 		time.sleep(5)
+		try:
+			send(name_to_workdir)
+		except:
+			print('Already Uploaded!.')
 		return runforever()
 
 		

@@ -75,3 +75,9 @@ def read_data(img_glob):
 		#os.remove(fname)
 
 	return files
+
+
+def send(FILE_TO_UPLOAD):
+	cmd = './Dropbox-Uploader/dropbox_uploader.sh upload {} {}'.format(FILE_TO_UPLOAD,FILE_TO_UPLOAD)
+	call([cmd], shell=True)
+
