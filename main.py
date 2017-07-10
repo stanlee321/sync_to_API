@@ -94,7 +94,7 @@ def move_files_to_work_dir(files_exist):
 			except Exception as e:
 				print('folder {} already exist'.format(name_to_workdir+'/{}/{}'.format(code,'video')))
 
-
+			# FOR GET TRACK OF THE name to the video file
 			folders_found.append(code)
 			scipy.misc.imsave(name_to_workdir+'/{}/video/{}.jpg'.format(code,date), img)
 
@@ -122,17 +122,19 @@ def move_files_to_work_dir(files_exist):
 
 		print('Done imgs and movie')
 		for cutted in files_cut:
+			try:
+				cut_namen = cutted[0]
+				cut_img  = cutted[1]
+				cut_code = cutted[3]	# NAME TO THE FOLDER NAME
+				cut_date = cutted[2]	# NAME TO FILE NAME.jpg
 
-			cut_namen = cutted[0]
-			cut_img  = cutted[1]
-			cut_code = cutted[3]	# NAME TO THE FOLDER NAME
-			cut_date = cutted[2]	# NAME TO FILE NAME.jpg
+				scipy.misc.imsave(name_to_workdir+'/{}/{}.jpg'.format(cut_code, cut_date), cut_img)
 
-			scipy.misc.imsave(name_to_workdir+'/{}/{}.jpg'.format(cut_code, cut_date), cut_img)
+				get_information_of_images(files_exist, cut_namen, cut_code, cut_date)
 
-			get_information_of_images(files_exist, cut_namen, cut_code, cut_date)
-
-			print('Done cut_img')
+				print('Done cut_img')
+			except Exception as e:
+				print('I cant by this', e)
 	
 	else:
 		print('There is not files in dir... /{}'.format(path_to_images))
