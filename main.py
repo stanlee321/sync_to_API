@@ -12,7 +12,7 @@ from pandas.io.json import json_normalize
 #import matplotlib.pyplot as plt
 import numpy as np
 import ast
-#import moviepy.editor as mpe
+import moviepy.editor as mpe
 import glob
 import time
 
@@ -31,22 +31,22 @@ name_to_workdir = 'WORKDIR'
 
 # FUTURE FUNCTION THAT WILL BE USED TO CREATE A VIDEO WITH THE IMAGES 
 # INTO THE path_to_images
-"""
+
 def create_video_from_images(path_to_convert_tovideo):
-	print(path_to_convert_tovideo)
+	#print(path_to_convert_tovideo)
 	img_glob = path_to_convert_tovideo + '*.jpg'
 	# Get images that were dumped during training
 	filenames = []
 	for fname in sorted(glob.glob(img_glob)):
-		files.append([fname,img,code,date])
+		files.append(fname)
 	filenames = sorted(filenames)
-	print(len(filenames))
-	assert filenames >=1
-	date = filenames[-1].split("/")[1][0:18]
+
+	assert len(filenames) >=1
+	date = filenames[-1].split("/")[1][0:19]
 
 	assert len(filenames) >= 1
 
-	fps  = 30
+	fps  = 15
 
 	# Create video file from PNGs
 	print("Producing video file...")
@@ -54,7 +54,7 @@ def create_video_from_images(path_to_convert_tovideo):
 	clip      = mpe.ImageSequenceClip(filenames, fps=fps)
 	clip.write_videofile(filename)
 	print("Done! video created")
-"""
+
 
 
 
@@ -75,6 +75,8 @@ def move_files_to_work_dir(files_exist):
 		print('len files', len(files))
 		files_cut = read_data(path_to_cut_images + '*.jpg')
 		print('len files', len(files_cut))
+
+		folders_found = []
 		for file  in files:
 			namen = file[0]	#path to the image
 			img = file[1]	# image as array
@@ -91,14 +93,32 @@ def move_files_to_work_dir(files_exist):
 				print('folder {} already exist'.format(name_to_workdir+'/{}/{}'.format(code,'video')))
 
 
-
+			folders_found.append(code)
 			scipy.misc.imsave(name_to_workdir+'/{}/video/{}.jpg'.format(code,date), img)
 
-			# CREATE VIDEO
-			#create_video_from_images(name_to_workdir+'/{}/video/'.format(code))
-#
 
-			print('Done imgs and movie')
+		# CREATE VIDEO
+		folders_found = list(set(folders_found))
+		for folder_ in sorted(folders_found):
+			path = name_to_workdir+'/{}/video/'.format(folder_)
+
+			onlyfiles = [f for f in listdir(path) if isfile(join(path, f))]
+			if '.mp4' in onlyfiles:
+				print('Already video here')
+
+			else:
+				
+				try:
+					create_video_from_images(path)
+					print('Done imgs and movie')
+
+				except Exception as e:
+					print('Folders without images or already converted or', e)
+
+
+
+
+		print('Done imgs and movie')
 		for cutted in files_cut:
 
 			cut_namen = cutted[0]
