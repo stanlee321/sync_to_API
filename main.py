@@ -48,7 +48,7 @@ def create_video_from_images(path_to_convert_tovideo):
 
 	assert len(filenames) >= 1
 
-	fps  = 15
+	fps  = 6
 
 	# Create video file from PNGs
 	print("Producing video file...")
