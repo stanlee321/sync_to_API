@@ -9,7 +9,7 @@ from utils import check_folder, get_json_from_api, get_plate_region, get_plates,
 import os
 import scipy.misc
 from pandas.io.json import json_normalize
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 import ast
 import moviepy.editor as mpe
