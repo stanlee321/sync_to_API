@@ -160,7 +160,7 @@ def get_information_of_images(file_exist, image, idd, date):
 		# Possible plates from the above result in the format i.e :
 		#								{'confidence': 94.38839, 'matches_template': 0, 'plate': '2070GKD'},
 		#							    {'confidence': 81.850777, 'matches_template': 0, 'plate': '207QGKD'},
-
+		print('!!!!!!!!', result_pandas_df)
 		possible_plates = get_plates(result_pandas_df)
 
 		# Working on the max confidence
