@@ -40,7 +40,7 @@ def create_video_from_images(path_to_convert_tovideo):
 	# Get images that were dumped during training
 	filenames = []
 	for fname in sorted(glob.glob(img_glob)):
-		files.append(fname)
+		filenames.append(fname)
 	filenames = sorted(filenames)
 
 	assert len(filenames) >=1
@@ -146,6 +146,7 @@ def get_information_of_images(file_exist, image, idd, date):
 	# Check if there is images in WORKDIR
 	# if there's image ...
 	if files_exist :
+		
 
 		# idd and date from taked image
 		
@@ -153,33 +154,36 @@ def get_information_of_images(file_exist, image, idd, date):
 		information_of_the_image_as_json_file = information_of_the_image_as_json_file.replace('false','False')
 
 		information_of_the_image_as_json_file = ast.literal_eval(information_of_the_image_as_json_file)
-
+		print(information_of_the_image_as_json_file)
 		# Transform result json to pandas df from the api , just the key == 'region' , the rest
 		# does not bother us.
 		result_pandas_df = json_normalize(information_of_the_image_as_json_file, 'results')
 		# Possible plates from the above result in the format i.e :
 		#								{'confidence': 94.38839, 'matches_template': 0, 'plate': '2070GKD'},
 		#							    {'confidence': 81.850777, 'matches_template': 0, 'plate': '207QGKD'},
-		print('!!!!!!!!', result_pandas_df)
-		possible_plates = get_plates(result_pandas_df)
 
-		# Working on the max confidence
-		prob = possible_plates[0]['confidence']
-		plate = possible_plates[0]['plate']
-
-		# Possible region of interest in the format i.e : [{'x': 147, 'y': 135},
- 		#												  {'x': 349, 'y': 156},
-		#												  {'x': 338, 'y': 246},
-		#												  {'x': 138, 'y': 224}]
-
-		possible_region = get_plate_region(result_pandas_df)
-
-		# Working on the max confidence
-		region = possible_region
 
 		if len(result_pandas_df) == 0:
 			print('The API cant abble to detect any plate in the image')
 		else:
+
+			print('!', result_pandas_df)
+		
+			possible_plates = get_plates(result_pandas_df)
+
+			# Working on the max confidence
+			prob = possible_plates[0]['confidence']
+			plate = possible_plates[0]['plate']
+
+			# Possible region of interest in the format i.e : [{'x': 147, 'y': 135},
+	 		#												  {'x': 349, 'y': 156},
+			#												  {'x': 338, 'y': 246},
+			#												  {'x': 138, 'y': 224}]
+
+			possible_region = get_plate_region(result_pandas_df)
+
+			# Working on the max confidence
+			region = possible_region
 			print('The posible plates are:')
 			print(possible_plates)
 			print('saving the max PROB. confidence to txt log ...')
