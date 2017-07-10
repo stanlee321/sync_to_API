@@ -73,7 +73,7 @@ def move_files_to_work_dir(files_exist):
 
 		files = read_data(path_to_images + '*.jpg')
 		print('len files', len(files))
-		files_cut = read_data(path_to_cut_images + '*.png')
+		files_cut = read_data(path_to_cut_images + '*.jpg')
 		print('len files', len(files_cut))
 		for file  in files:
 			namen = file[0]	#path to the image

@@ -67,7 +67,7 @@ def read_data(img_glob):
 	# HER LEFT TO CHABNGE BITWHISECHANGE FROM BGR TO RGB in img
 		img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 	####################################
-		date = fname.split("/")[1][0:18]
+		date = fname.split("/")[1][0:19]
 
 		code = fname.split("/")[1][-13:-4]
 
