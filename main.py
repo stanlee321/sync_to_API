@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+# CODE FOR SYNC CAR IMAGES AND PROCESS IT INTO OPENANRP API 
+# CREATED BY stanlee321@gmail.com
 
+
+# IMPORT some libraries
 import cv2
 from utils import check_folder, get_json_from_api, get_plate_region, get_plates, read_data
 import os
@@ -11,15 +15,22 @@ import ast
 import moviepy.editor as mpe
 import glob
 import time
-# Global variables
-#files_exist = False
 
-# Check if file is empy and move files to workdir
+
+# PATHS WHERE TO WORK
+# path_to_images = Images where the PI will upload the images (this images
+# will be converted to video in the future... dtype = string
+
+# path_to_cut_images  = Cutted images that will be process it with the API  dtype = string
+# name_to_workdir = GENERAL WORKDIR  dtype = string
 
 path_to_images = 'casosReportados/'
 path_to_cut_images = 'placasAreconocer/'
 name_to_workdir = 'WORKDIR'
 
+
+# FUTURE FUNCTION THAT WILL BE USED TO CREATE A VIDEO WITH THE IMAGES 
+# INTO THE path_to_images
 """
 def create_video_from_images(path_to_convert_tovideo):
 	print(path_to_convert_tovideo)
@@ -44,6 +55,8 @@ def create_video_from_images(path_to_convert_tovideo):
 	clip.write_videofile(filename)
 	print("Done! video created")
 """
+
+
 
 def check_files_existence():
 	global files_exist
@@ -103,17 +116,13 @@ def move_files_to_work_dir(files_exist):
 		print('There is not files in dir... /{}'.format(path_to_images))
 
 
-	#files_exist, images = check_folder(path_to_images)
 
 
-### Work on workdir and use the API
 
-# Check workdir files
 
 def get_information_of_images(file_exist, image, idd, date):
 	# Check if there is images in WORKDIR
 	# if there's image ...
-
 	if files_exist :
 
 		# idd and date from taked image
@@ -135,7 +144,6 @@ def get_information_of_images(file_exist, image, idd, date):
 		# Working on the max confidence
 		prob = possible_plates[0]['confidence']
 		plate = possible_plates[0]['plate']
-		print('IAM HERE')
 
 		# Possible region of interest in the format i.e : [{'x': 147, 'y': 135},
  		#												  {'x': 349, 'y': 156},
@@ -161,6 +169,8 @@ def get_information_of_images(file_exist, image, idd, date):
 			# Save image with plate region labeled
 			font = cv2.FONT_HERSHEY_SIMPLEX
 
+			# CREATE the "detected" region in the image
+			# and write his plate number over it
 			px0 = region[0]['x']
 			py0 = region[0]['y']
 			px1 = region[2]['x']
@@ -206,11 +216,5 @@ def runforever():
 
 
 if __name__ == '__main__':
-
 	runforever()
 	
-	
-
-		
-
-
